@@ -1,17 +1,17 @@
-import { connectDB } from '../../../middleware/mongoose';
-import FoodListing from '../../../models/foodlistingmodel';
-import { checkExpiry } from '../../../middleware/expiryProcessor';
+import dbConnect from "@/middleware/mongoose";
+import Listings from "@/models/foodlistingmodel";
+import { checkExpiry } from '@/middleware/expiryProcessor';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  await connectDB();
+  await dbConnect();
   
   try {
-    const listings = await FoodListing.find({ isExpired: false });
+    const listings = await Listings.find({ isExpired: false });
     const updates = listings.map(async (item) => {
       const { expiry, isExpired } = await checkExpiry(item);
-      return FoodListing.updateOne(
+      return Listings.updateOne(
         { _id: item._id },
         { expiresAt: new Date(expiry), isExpired }
       );

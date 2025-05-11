@@ -1,13 +1,13 @@
-import { connectDB } from '../../../middleware/mongoose';
-import FoodListing from '../../../models/foodlistingmodel';
+import dbConnect from "@/middleware/mongoose";
+import Listings from "@/models/foodlistingmodel";
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  await connectDB();
+  await dbConnect();
   
   try {
-    const result = await FoodListing.deleteMany({ isExpired: true });
+    const result = await Listings.deleteMany({ isExpired: true });
     res.status(200).json({ deletedCount: result.deletedCount });
   } catch (error) {
     console.error('Cleanup error:', error);
