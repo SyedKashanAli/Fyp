@@ -36,3 +36,8 @@ export const setDefaultAddress = async (userId, addressId) => {
     throw error;
   }
 };
+
+// Add this at the end of the file to satisfy Next.js page requirements
+export default function AddressesPage() {
+  return null;
+}

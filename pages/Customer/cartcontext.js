@@ -171,3 +171,8 @@ export const CartProvider = ({ children }) => {
 };
 
 export const useCart = () => useContext(CartContext);
+
+// Add this at the end of the file to satisfy Next.js page requirements
+export default function CartContextPage() {
+  return null;
+}
